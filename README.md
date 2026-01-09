@@ -200,12 +200,17 @@ This diagram shows how the three files work together and how hooks interact with
 
 ### As a Claude Code Plugin (Recommended)
 
-**Option 1: Install from Git repository**
-```bash
-claude plugin install https://github.com/OniReimu/planning-with-files-superpowers.git
+**Option 1: Install from your GitHub repo as a marketplace**
+
+```text
+/plugin marketplace add OniReimu/planning-with-files-superpowers
+/plugin install planning-with-files-superpowers@planning-with-files-superpowers
 ```
 
 **Option 2: Install from local path**
+
+If you want to develop locally, clone this repo and install it from disk:
+
 ```bash
 cd "/path/to/planning-with-files-superpowers"
 claude plugin install --local .
@@ -261,10 +266,10 @@ Or manually create `.cursor/rules/planning-with-files.mdc` in your project with 
 Extract just the skill directly into your current directory:
 
 ```bash
-curl -L https://github.com/OniReimu/planning-with-files-superpowers/archive/master.tar.gz | tar -xzv --strip-components=2 "planning-with-files-superpowers-master/skills/planning-with-files"
+curl -L https://github.com/OniReimu/planning-with-files-superpowers/archive/master.tar.gz | tar -xzv --strip-components=2 "planning-with-files-superpowers-master/skills/planning-with-files-superpowers"
 ```
 
-Then move `planning-with-files/` to `~/.claude/skills/`.
+Then move `planning-with-files-superpowers/` to `~/.claude/skills/`.
 
 ## Usage
 
@@ -504,7 +509,7 @@ ls -la task_plan.md findings.md progress.md
 
 **Solution:**
 1. Ensure you're using Claude Code v1.0.18 or later
-2. Verify the skill is installed correctly: `ls ~/.claude/skills/planning-with-files/`
+2. Verify the skill is installed correctly: `ls ~/.claude/skills/planning-with-files-superpowers/`
 3. Check that `task_plan.md` exists in your current directory
 
 ---

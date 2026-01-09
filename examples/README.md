@@ -651,7 +651,7 @@ COMPLETE TASK
 ## More Examples
 
 Want to see more examples? Check out:
-- [examples.md](../skills/planning-with-files/examples.md) - Additional patterns and use cases
+- [examples.md](../skills/planning-with-files-superpowers/examples.md) - Additional patterns and use cases
 
 ---
 

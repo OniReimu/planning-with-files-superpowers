@@ -21,12 +21,13 @@ This fork adds Superpowers integration while maintaining full compatibility with
 ### Migration Steps
 
 1. **Update the Plugin**
-   ```bash
-   # If installed from original, uninstall first
-   claude plugin uninstall planning-with-files
-   
-   # Install this fork
-   claude plugin install https://github.com/OniReimu/planning-with-files-superpowers.git
+   ```text
+   # If installed from original, uninstall first (optional)
+   /plugin uninstall planning-with-files
+
+   # Add your fork as a marketplace and install it
+   /plugin marketplace add OniReimu/planning-with-files-superpowers
+   /plugin install planning-with-files-superpowers@planning-with-files-superpowers
    ```
 
 2. **Existing Files Continue Working**
