@@ -19,6 +19,31 @@ hooks:
 
 Work like Manus: Use persistent markdown files as your "working memory on disk."
 
+## Superpowers Canonical Plan Handoff (Predictable Flow)
+
+This fork is designed to work cleanly with a workflow where **another agent/model created a canonical implementation plan** (e.g. via Superpowers) at `docs/plans/...`.
+
+When starting *implementation* in Claude:
+
+### If a plan path is provided
+- Create the 3 planning files in the **project directory**: `task_plan.md`, `findings.md`, `progress.md`
+- In `task_plan.md`, write near the top:
+  - `Canonical plan: docs/plans/<the file>.md`
+  - Current phase
+  - Next 1–3 actions (so you can resume quickly after context switches)
+
+### If no plan path is provided
+1. Check whether `docs/plans/` exists and has candidate plan files.
+   - Use Bash to list candidates (example): `ls -1 docs/plans/*.md 2>/dev/null || true`
+2. If candidates exist: **ask the user which file is canonical** (or ask them to paste the path).
+3. If the user says **"skip"**: proceed with the normal planning-with-files flow (no canonical plan).
+4. If no candidates exist: ask the user whether to **skip**; if not, ask them to provide the plan path.
+
+### Prevent future confusion: “Plan deviations”
+In `task_plan.md`, keep a small section tracking deviations from the canonical plan:
+- **Minor deviations** → log them in `task_plan.md` and keep going.
+- **Major deviations** → STOP and ask the user to update/replace the canonical `docs/plans/...md` plan (or explicitly approve the new direction).
+
 ## Important: Where Files Go
 
 When using this skill:

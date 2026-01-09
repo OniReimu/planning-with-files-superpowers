@@ -1,8 +1,51 @@
-# Migration Guide: v1.x to v2.0.0
+# Migration Guide
+
+## v1.x to v2.0.0
 
 ## Overview
 
 Version 2.0.0 adds hooks integration and enhanced templates while maintaining backward compatibility with existing workflows.
+
+## v2.0.0 to v2.0.0-superpowers (This Fork)
+
+### Overview
+
+This fork adds Superpowers integration while maintaining full compatibility with the original v2.0.0 features.
+
+### What's New
+
+- **Canonical Plan Detection**: When creating `task_plan.md`, the skill now checks for existing plans in `docs/plans/...` and prompts you to link to them
+- **Unified Workflow**: Designed for workflows where Superpowers generates canonical plans and this plugin maintains execution tracking
+- **No Breaking Changes**: All existing workflows continue to work exactly as before
+
+### Migration Steps
+
+1. **Update the Plugin**
+   ```bash
+   # If installed from original, uninstall first
+   claude plugin uninstall planning-with-files
+   
+   # Install this fork
+   claude plugin install https://github.com/OniReimu/planning-with-files-superpowers.git
+   ```
+
+2. **Existing Files Continue Working**
+   - Your existing `task_plan.md`, `findings.md`, and `progress.md` files will continue to work
+   - No changes required to existing planning files
+
+3. **Optional: Link to Superpowers Plans**
+   - When creating new `task_plan.md` files, you'll be prompted if a canonical plan exists
+   - You can choose to link to it or proceed with normal planning
+
+### Benefits
+
+- **Seamless Integration**: Works with Superpowers-generated plans in `docs/plans/...`
+- **Better Handoff**: Clear separation between canonical plan (stable) and execution tracker (dynamic)
+- **Multi-Model Support**: Designed for GPT planning + Claude implementation workflows
+
+---
+
+## v1.x to v2.0.0 (Original)
 
 ## What's New
 
@@ -125,4 +168,6 @@ Your planning files should answer:
 
 ## Questions?
 
-Open an issue: https://github.com/OthmanAdi/planning-with-files/issues
+**For Superpowers integration:** Open an issue: https://github.com/OniReimu/planning-with-files-superpowers/issues
+
+**For core planning-with-files:** Open an issue: https://github.com/OthmanAdi/planning-with-files/issues

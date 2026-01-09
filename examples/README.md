@@ -2,6 +2,29 @@
 
 This directory contains real-world examples showing how the 3-file planning pattern works in practice.
 
+## Superpowers Handoff Example (Canonical Plan in `docs/plans/...`)
+
+If you planned in another environment (e.g. Codex + Superpowers) and now want Claude to implement, use this predictable handoff:
+
+### 1) Identify the canonical plan
+
+- If you already know it: provide the path (example: `docs/plans/2026-01-09-my-feature.md`)
+- If you don’t: list candidates from `docs/plans/` and pick one
+- If you don’t want a canonical plan: say **“skip”** and use normal planning-with-files
+
+### 2) Create planning files and link the canonical plan in `task_plan.md`
+
+At the top of `task_plan.md`, set:
+
+- `Canonical plan: docs/plans/<the file>.md`
+- Next 1–3 actions (so resuming is easy after context switches)
+
+### 3) Track deviations explicitly
+
+In `task_plan.md` → “Plan Deviations”:
+- Minor deviation → log it and continue
+- Major deviation → STOP and ask to update/replace the canonical `docs/plans/...md`
+
 ## Example: Building a Todo App
 
 This walkthrough demonstrates a complete task from start to finish, showing how `task_plan.md`, `findings.md`, and `progress.md` evolve together.

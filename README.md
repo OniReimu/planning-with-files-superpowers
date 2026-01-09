@@ -1,31 +1,45 @@
-# Planning with Files
+# Planning with Files + Superpowers
 
 > **Work like Manus** — the AI agent company Meta acquired for **$2 billion**.
 
-## Thank You
+> **Fork of [planning-with-files](https://github.com/OthmanAdi/planning-with-files)** — Integrated with [Superpowers](https://github.com/obra/superpowers) workflow for seamless planning-to-implementation handoff.
 
-To everyone who starred, forked, and shared this skill — thank you. This project blew up in less than 24 hours, and the support from the community has been incredible.
+## About This Fork
 
-If this skill helps you work smarter, that's all I wanted.
+This is a fork of the excellent [planning-with-files](https://github.com/OthmanAdi/planning-with-files) plugin, enhanced with **Superpowers integration** to work seamlessly with the Superpowers development workflow.
+
+**Key Integration Features:**
+- **Canonical Plan Detection**: Automatically checks for Superpowers-generated plans in `docs/plans/...` when creating `task_plan.md`
+- **Unified Workflow**: `task_plan.md` serves as the execution tracker while `docs/plans/...` remains the canonical implementation plan
+- **Cross-Model Handoff**: Designed for workflows where GPT-5.2 (Codex) plans with Superpowers, and Claude Code implements with persistent tracking
+
+**Original Work:** This fork is based on the original work by [Ahmad Othman Ammar Adi](https://github.com/OthmanAdi). All credit for the core Manus-style planning pattern goes to the original author.
 
 ---
 
-A Claude Code plugin containing an [Agent Skill](https://code.claude.com/docs/en/skills) that transforms your workflow to use persistent markdown files for planning, progress tracking, and knowledge storage — the exact pattern that made Manus worth billions.
+A Claude Code plugin containing an [Agent Skill](https://code.claude.com/docs/en/skills) that transforms your workflow to use persistent markdown files for planning, progress tracking, and knowledge storage — the exact pattern that made Manus worth billions, now integrated with Superpowers.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blue)](https://code.claude.com/docs/en/plugins)
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-green)](https://code.claude.com/docs/en/skills)
 [![Cursor Rules](https://img.shields.io/badge/Cursor-Rules-purple)](https://docs.cursor.com/context/rules-for-ai)
-[![Version](https://img.shields.io/badge/version-2.0.1-brightgreen)](https://github.com/OthmanAdi/planning-with-files/releases)
+[![Version](https://img.shields.io/badge/version-2.0.0-superpowers-brightgreen)](https://github.com/OniReimu/planning-with-files-superpowers/releases)
 
 ## Versions
 
 | Version | Branch | Features | Install |
 |---------|--------|----------|---------|
-| **v2.0.0** (current) | `master` | Hooks, templates, scripts | `/plugin install planning-with-files@planning-with-files` |
+| **v2.0.0-superpowers** (current) | `master` | Superpowers integration, hooks, templates, scripts | See [Installation](#installation) below |
+| **v2.0.0** (original) | `master` | Hooks, templates, scripts | `/plugin install planning-with-files@planning-with-files` |
 | **v1.0.0** (legacy) | `legacy` | Core 3-file pattern | `git clone -b legacy https://github.com/OthmanAdi/planning-with-files.git` |
 
-## What's New in v2.0.0
+## What's New in v2.0.0-superpowers
+
+- **Superpowers Integration** — Automatically detects and links to canonical plans in `docs/plans/...` when creating `task_plan.md`
+- **Unified Planning Workflow** — Seamless handoff between Superpowers planning (Codex/GPT) and implementation (Claude Code)
+- **Enhanced task_plan.md Template** — Includes canonical plan pointer section for Superpowers compatibility
+
+## What's New in v2.0.0 (from original)
 
 - **Hooks Integration** — Automatic plan re-reading and completion verification
 - **Templates** — Structured templates for task_plan.md, findings.md, progress.md
@@ -186,8 +200,18 @@ This diagram shows how the three files work together and how hooks interact with
 
 ### As a Claude Code Plugin (Recommended)
 
-Install directly using the Claude Code CLI:
+**Option 1: Install from Git repository**
+```bash
+claude plugin install https://github.com/OniReimu/planning-with-files-superpowers.git
+```
 
+**Option 2: Install from local path**
+```bash
+cd "/path/to/planning-with-files-superpowers"
+claude plugin install --local .
+```
+
+**Option 3: Install original version (without Superpowers integration)**
 ```
 /plugin marketplace add OthmanAdi/planning-with-files
 /plugin install planning-with-files@planning-with-files
@@ -200,14 +224,14 @@ Clone or copy this repository into your project's `.claude/plugins/` directory:
 ```bash
 # Option 1: Clone into plugins directory
 mkdir -p .claude/plugins
-git clone https://github.com/OthmanAdi/planning-with-files.git .claude/plugins/planning-with-files
+git clone https://github.com/OniReimu/planning-with-files-superpowers.git .claude/plugins/planning-with-files-superpowers
 
 # Option 2: Add as git submodule
-git submodule add https://github.com/OthmanAdi/planning-with-files.git .claude/plugins/planning-with-files
+git submodule add https://github.com/OniReimu/planning-with-files-superpowers.git .claude/plugins/planning-with-files-superpowers
 
 # Option 3: Use --plugin-dir flag
-git clone https://github.com/OthmanAdi/planning-with-files.git
-claude --plugin-dir ./planning-with-files
+git clone https://github.com/OniReimu/planning-with-files-superpowers.git
+claude --plugin-dir ./planning-with-files-superpowers
 ```
 
 ### Legacy Installation (Skills Only)
@@ -215,8 +239,8 @@ claude --plugin-dir ./planning-with-files
 Copy the `skills/` directory contents into your `.claude/skills/` folder:
 
 ```bash
-git clone https://github.com/OthmanAdi/planning-with-files.git
-cp -r planning-with-files/skills/* ~/.claude/skills/
+git clone https://github.com/OniReimu/planning-with-files-superpowers.git
+cp -r planning-with-files-superpowers/skills/* ~/.claude/skills/
 ```
 
 ### Cursor Installation
@@ -224,8 +248,8 @@ cp -r planning-with-files/skills/* ~/.claude/skills/
 Copy the `.cursor/rules/` directory into your project:
 
 ```bash
-git clone https://github.com/OthmanAdi/planning-with-files.git
-cp -r planning-with-files/.cursor .cursor
+git clone https://github.com/OniReimu/planning-with-files-superpowers.git
+cp -r planning-with-files-superpowers/.cursor .cursor
 ```
 
 Or manually create `.cursor/rules/planning-with-files.mdc` in your project with the content from this repo.
@@ -237,7 +261,7 @@ Or manually create `.cursor/rules/planning-with-files.mdc` in your project with 
 Extract just the skill directly into your current directory:
 
 ```bash
-curl -L https://github.com/OthmanAdi/planning-with-files/archive/master.tar.gz | tar -xzv --strip-components=2 "planning-with-files-master/skills/planning-with-files"
+curl -L https://github.com/OniReimu/planning-with-files-superpowers/archive/master.tar.gz | tar -xzv --strip-components=2 "planning-with-files-superpowers-master/skills/planning-with-files"
 ```
 
 Then move `planning-with-files/` to `~/.claude/skills/`.
@@ -487,7 +511,11 @@ ls -la task_plan.md findings.md progress.md
 
 ### Need help?
 
-Open an issue at [github.com/OthmanAdi/planning-with-files/issues](https://github.com/OthmanAdi/planning-with-files/issues) with:
+**For Superpowers integration issues:** Open an issue at [github.com/OniReimu/planning-with-files-superpowers/issues](https://github.com/OniReimu/planning-with-files-superpowers/issues)
+
+**For core planning-with-files issues:** Open an issue at [github.com/OthmanAdi/planning-with-files/issues](https://github.com/OthmanAdi/planning-with-files/issues)
+
+Include:
 - Your Claude Code version (`claude --version`)
 - The command you ran
 - What happened vs what you expected
@@ -552,13 +580,16 @@ Extensions built by the community:
 
 | Fork | Author | Features |
 |------|--------|----------|
+| [planning-with-files-superpowers](https://github.com/OniReimu/planning-with-files-superpowers) | [@OniReimu](https://github.com/OniReimu) | Superpowers integration, canonical plan detection, unified workflow |
 | [multi-manus-planning](https://github.com/kmichels/multi-manus-planning) | [@kmichels](https://github.com/kmichels) | Multi-project support, separate planning/source paths, SessionStart git sync |
 
 *Built something? Open an issue to get listed!*
 
 ## Acknowledgments
 
+- **Ahmad Othman Ammar Adi** — Original author of [planning-with-files](https://github.com/OthmanAdi/planning-with-files)
 - **Manus AI** — For pioneering context engineering patterns
+- **Superpowers** — For the excellent development workflow framework
 - **Anthropic** — For Claude Code, Agent Skills, and the Plugin system
 - **Lance Martin** — For the detailed Manus architecture analysis
 - Based on [Context Engineering for AI Agents](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus)
@@ -576,8 +607,9 @@ MIT License — feel free to use, modify, and distribute.
 
 ---
 
-**Author:** [Ahmad Othman Ammar Adi](https://github.com/OthmanAdi)
+**Fork Author:** [OniReimu](https://github.com/OniReimu)  
+**Original Author:** [Ahmad Othman Ammar Adi](https://github.com/OthmanAdi)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=OthmanAdi/planning-with-files&type=Date)](https://star-history.com/#OthmanAdi/planning-with-files&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=OniReimu/planning-with-files-superpowers&type=Date)](https://star-history.com/#OniReimu/planning-with-files-superpowers&Date)

@@ -1,6 +1,10 @@
 MIT License
 
-Copyright (c) 2026 Ahmad Adi
+Copyright (c) 2026 Ahmad Adi (Original Author)
+Copyright (c) 2026 OniReimu (Fork Author - Superpowers Integration)
+
+This is a fork of planning-with-files (https://github.com/OthmanAdi/planning-with-files)
+with Superpowers integration enhancements.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

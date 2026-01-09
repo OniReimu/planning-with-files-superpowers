@@ -1,14 +1,14 @@
 {
-  "name": "planning-with-files",
+  "name": "planning-with-files-superpowers",
   "owner": {
-    "name": "Ahmad Othman Ammar Adi",
-    "url": "https://github.com/OthmanAdi"
+    "name": "OniReimu",
+    "url": "https://github.com/OniReimu"
   },
   "plugins": [
     {
-      "name": "planning-with-files",
+      "name": "planning-with-files-superpowers",
       "source": "./",
-      "description": "Manus-style persistent markdown files for planning, progress tracking, and knowledge storage. Now with hooks integration.",
+      "description": "Manus-style persistent markdown files integrated with Superpowers workflow. Checks for canonical plans in docs/plans/ and maintains task_plan.md, findings.md, progress.md. Includes hooks for automatic plan re-reading and completion verification.",
       "version": "2.0.0"
     }
   ]

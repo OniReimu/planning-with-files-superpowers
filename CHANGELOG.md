@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0-superpowers] - 2026-01-09
+
+### Added
+
+- **Superpowers Integration**
+  - Automatic detection of canonical plans in `docs/plans/...` when creating `task_plan.md`
+  - User prompt to confirm if detected plan is the one to use
+  - `task_plan.md` template includes canonical plan pointer section
+  - Seamless handoff between Superpowers planning (Codex/GPT) and implementation (Claude Code)
+
+- **Enhanced Workflow**
+  - `task_plan.md` serves as execution tracker while `docs/plans/...` remains canonical
+  - Support for multi-model workflows (GPT plans, Claude implements)
+  - Maintains compatibility with original planning-with-files workflow
+
+### Changed
+
+- Plugin name changed to `planning-with-files-superpowers` to distinguish from original
+- Repository URLs updated to reflect fork
+- Installation instructions updated for fork
+
+### Preserved
+
+- All original v2.0.0 features and functionality
+- Backward compatibility with existing planning-with-files workflows
+- MIT License unchanged
+
 ## [2.0.0] - 2026-01-08
 
 ### Added
