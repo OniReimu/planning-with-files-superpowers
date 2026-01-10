@@ -29,6 +29,22 @@ All notable changes to this project will be documented in this file.
 - Backward compatibility with existing planning-with-files workflows
 - MIT License unchanged
 
+## [2.0.1-superpowers] - 2026-01-09
+
+### Fixed
+
+- Removed duplicate legacy skill directory to prevent the fork from appearing to install “both” versions.
+- Renamed the skill to `planning-with-files-superpowers` (unique skill name) to avoid collisions when the upstream `planning-with-files` plugin is also installed.
+- Updated install docs to use marketplace install flow (`/plugin marketplace add ...` then `/plugin install ...`).
+
+## [2.0.2-superpowers] - 2026-01-10
+
+### Added
+
+- **Checkpointed implementation** guidance (executing-plans compatible): review plan first, execute default batches of 3 tasks, report verification output, and wait for feedback.
+- **Stop policy: checkpoints-allowed** to permit pausing between checkpoint batches without failing the Stop hook.
+- **Batch Reports** section in `progress.md` template for clean handoff to reviewers (e.g. Codex/GPT-5.2).
+
 ## [2.0.0] - 2026-01-08
 
 ### Added

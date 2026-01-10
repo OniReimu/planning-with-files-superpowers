@@ -1,6 +1,6 @@
 ---
 name: planning-with-files-superpowers
-version: "2.0.1"
+version: "2.0.2"
 description: Manus-style file-based planning for complex tasks, with Superpowers canonical-plan handoff support. Creates task_plan.md, findings.md, and progress.md. Use when starting complex multi-step tasks, research projects, or any task requiring >5 tool calls.
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch
 hooks:
@@ -43,6 +43,45 @@ When starting *implementation* in Claude:
 In `task_plan.md`, keep a small section tracking deviations from the canonical plan:
 - **Minor deviations** → log them in `task_plan.md` and keep going.
 - **Major deviations** → STOP and ask the user to update/replace the canonical `docs/plans/...md` plan (or explicitly approve the new direction).
+
+## Checkpointed Implementation (Executing-Plans Compatible)
+
+If a **Canonical plan** is set (e.g. `docs/plans/...`), execute it with the same safety rails as `superpowers:executing-plans`, but use files for persistence:
+
+### Step 1: Load and Review (before coding)
+1. Read the canonical plan file.
+2. Write a short “Plan Review” note in `progress.md`:
+   - questions / concerns
+   - assumptions
+   - what you will do first
+3. If there are concerns or missing info: ask the user before starting.
+
+### Step 2: Execute in Batches (default: first 3 tasks)
+- Execute the first **3 tasks** (or fewer if they are large/tightly coupled).
+- Follow the plan steps exactly, including verifications.
+- Update `task_plan.md` (phase + next 1–3 actions) and log details in `progress.md`.
+
+### Step 3: Report + Wait (checkpoint)
+After the batch:
+- Write a **Batch Report** in `progress.md` (what changed + verification output).
+- Say: **“Ready for feedback.”** and wait for the user before continuing.
+
+### Step 4: Continue
+Based on feedback, apply changes if needed, then execute the next batch and repeat.
+
+### Stop policy (to allow pausing)
+If you plan to pause/stop between batches, set in `task_plan.md`:
+
+- `Stop policy: checkpoints-allowed`
+
+This allows the Stop hook to pass during checkpoints without requiring all phases to be complete.
+
+### When to stop and ask for help
+STOP executing immediately when:
+- You hit a blocker mid-batch (missing dependency, test fails, instruction unclear)
+- The plan has critical gaps preventing starting
+- You don’t understand an instruction
+- Verification fails repeatedly
 
 ## Important: Where Files Go
 

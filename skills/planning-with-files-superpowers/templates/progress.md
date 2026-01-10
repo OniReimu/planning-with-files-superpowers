@@ -55,6 +55,33 @@
 - Files created/modified:
   -
 
+## Batch Reports (Checkpointed Execution)
+<!--
+Use this when executing a canonical plan in reviewable batches (executing-plans style).
+
+Default batch size: 3 tasks.
+After each batch:
+- Summarize what was implemented
+- Paste verification commands and output (tests, builds, linters)
+- List any blockers/questions
+- End your user message with: "Ready for feedback."
+-->
+
+### Batch 1: [Short name]
+- **Canonical plan:** [docs/plans/... | none]
+- **Tasks covered:** [e.g. Task 1–3]
+- **Changes made:**
+  - [file] - [what changed]
+- **Verification:**
+  - Run: `[command]`
+  - Output:
+    ```
+    [paste output]
+    ```
+- **Notes / blockers / questions:**
+  - [item]
+- **Ready for feedback:** yes
+
 ## Test Results
 <!-- 
   WHAT: Table of tests you ran, what you expected, what actually happened.

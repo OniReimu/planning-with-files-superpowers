@@ -20,6 +20,15 @@ This plan is usually stable; this task_plan.md is the dynamic execution tracker.
 -->
 Canonical plan: [e.g. docs/plans/2026-01-09-my-feature.md | none]
 
+## Stop Policy (for checkpoints)
+<!--
+Default behavior (strict): the Stop hook blocks stopping until all phases are complete.
+
+If you are executing a canonical plan in reviewable batches (executing-plans style),
+set this to allow pausing between batches:
+-->
+Stop policy: [strict | checkpoints-allowed]
+
 ## Next 1–3 Actions
 <!--
 Keep this tiny and concrete so you can resume quickly after context switches.

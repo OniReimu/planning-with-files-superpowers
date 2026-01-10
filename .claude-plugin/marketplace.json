@@ -9,7 +9,7 @@
       "name": "planning-with-files-superpowers",
       "source": "./",
       "description": "Manus-style persistent markdown files integrated with Superpowers workflow. Checks for canonical plans in docs/plans/ and maintains task_plan.md, findings.md, progress.md. Includes hooks for automatic plan re-reading and completion verification.",
-      "version": "2.0.0"
+      "version": "2.0.2"
     }
   ]
 }

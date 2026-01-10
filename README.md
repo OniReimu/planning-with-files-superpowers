@@ -23,15 +23,27 @@ A Claude Code plugin containing an [Agent Skill](https://code.claude.com/docs/en
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blue)](https://code.claude.com/docs/en/plugins)
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-green)](https://code.claude.com/docs/en/skills)
 [![Cursor Rules](https://img.shields.io/badge/Cursor-Rules-purple)](https://docs.cursor.com/context/rules-for-ai)
-[![Version](https://img.shields.io/badge/version-2.0.0-superpowers-brightgreen)](https://github.com/OniReimu/planning-with-files-superpowers/releases)
+[![Version](https://img.shields.io/badge/version-2.0.2-superpowers-brightgreen)](https://github.com/OniReimu/planning-with-files-superpowers/releases)
 
 ## Versions
 
 | Version | Branch | Features | Install |
 |---------|--------|----------|---------|
-| **v2.0.0-superpowers** (current) | `master` | Superpowers integration, hooks, templates, scripts | See [Installation](#installation) below |
+| **v2.0.2-superpowers** (current) | `master` | Superpowers integration, hooks, templates, scripts | See [Installation](#installation) below |
 | **v2.0.0** (original) | `master` | Hooks, templates, scripts | `/plugin install planning-with-files@planning-with-files` |
 | **v1.0.0** (legacy) | `legacy` | Core 3-file pattern | `git clone -b legacy https://github.com/OthmanAdi/planning-with-files.git` |
+
+## What's New in v2.0.2-superpowers
+
+- **Checkpointed batches (executing-plans compatible)** — default batches of 3 tasks, report verification output, “Ready for feedback.”
+- **Stop policy: checkpoints-allowed** — lets you pause between checkpoint batches without failing the Stop hook
+- **Batch Reports** section added to `progress.md` template for clean handoff to reviewers
+
+## What's New in v2.0.1-superpowers
+
+- **No more collisions** — skill name is `planning-with-files-superpowers` (safe alongside upstream plugin)
+- **No duplicate skills** — fork ships a single skill directory
+- **Canonical plan pointer + deviations** — `task_plan.md` includes `Canonical plan:` pointer and Plan Deviations section for stable/trackable Superpowers handoffs
 
 ## What's New in v2.0.0-superpowers
 
@@ -88,111 +100,76 @@ Filesystem = Disk (persistent, unlimited)
 <details>
 <summary><strong>Workflow Diagram</strong> (click to expand)</summary>
 
-This diagram shows how the three files work together and how hooks interact with them:
+This diagram shows the intended **two-agent workflow on the same repo**:
+- **Codex CLI (GPT-5.2)**: creates the canonical plan in `docs/plans/...` and later reviews batches using evidence from `progress.md`
+- **Claude Code**: executes the plan in checkpointed batches while keeping persistent state in `task_plan.md/findings.md/progress.md`
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    TASK START                                    │
-│  User requests a complex task (>5 tool calls expected)          │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-                         ▼
-         ┌───────────────────────────────┐
-         │  STEP 1: Create task_plan.md │
-         │  (NEVER skip this step!)      │
-         └───────────────┬───────────────┘
-                         │
-                         ▼
-         ┌───────────────────────────────┐
-         │  STEP 2: Create findings.md   │
-         │  STEP 3: Create progress.md   │
-         └───────────────┬───────────────┘
-                         │
-                         ▼
-    ┌────────────────────────────────────────────┐
-    │         WORK LOOP (Iterative)              │
-    │                                            │
-    │  ┌──────────────────────────────────────┐ │
-    │  │  PreToolUse Hook (Automatic)         │ │
-    │  │  → Reads task_plan.md before        │ │
-    │  │    Write/Edit/Bash operations       │ │
-    │  │  → Refreshes goals in attention      │ │
-    │  └──────────────┬───────────────────────┘ │
-    │                 │                          │
-    │                 ▼                          │
-    │  ┌──────────────────────────────────────┐ │
-    │  │  Perform work (tool calls)          │ │
-    │  │  - Research → Update findings.md    │ │
-    │  │  - Implement → Update progress.md    │ │
-    │  │  - Make decisions → Update both     │ │
-    │  └──────────────┬───────────────────────┘ │
-    │                 │                          │
-    │                 ▼                          │
-    │  ┌──────────────────────────────────────┐ │
-    │  │  After 2 view/browser operations:    │ │
-    │  │  → MUST update findings.md           │ │
-    │  │    (2-Action Rule)                   │ │
-    │  └──────────────┬───────────────────────┘ │
-    │                 │                          │
-    │                 ▼                          │
-    │  ┌──────────────────────────────────────┐ │
-    │  │  After completing a phase:            │ │
-    │  │  → Update task_plan.md status        │ │
-    │  │  → Update progress.md with details   │ │
-    │  └──────────────┬───────────────────────┘ │
-    │                 │                          │
-    │                 ▼                          │
-    │  ┌──────────────────────────────────────┐ │
-    │  │  If error occurs:                    │ │
-    │  │  → Log in task_plan.md               │ │
-    │  │  → Log in progress.md                │ │
-    │  │  → Document resolution               │ │
-    │  └──────────────┬───────────────────────┘ │
-    │                 │                          │
-    │                 └──────────┐               │
-    │                            │               │
-    │                            ▼               │
-    │              ┌──────────────────────┐     │
-    │              │  More work to do?    │     │
-    │              └──────┬───────────────┘     │
-    │                     │                     │
-    │              YES ───┘                     │
-    │              │                            │
-    │              └──────────┐                 │
-    │                         │                 │
-    └─────────────────────────┘                 │
-                                                 │
-                         NO                      │
-                         │                       │
-                         ▼                       │
-         ┌──────────────────────────────────────┐
-         │  Stop Hook (Automatic)               │
-         │  → Checks if all phases complete     │
-         │  → Verifies task_plan.md status      │
-         └──────────────┬───────────────────────┘
-                         │
-                         ▼
-         ┌──────────────────────────────────────┐
-         │  All phases complete?                │
-         └──────────────┬───────────────────────┘
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-            YES                    NO
-              │                     │
-              ▼                     ▼
-    ┌─────────────────┐    ┌─────────────────┐
-    │  TASK COMPLETE  │    │  Continue work  │
-    │  Deliver files  │    │  (back to loop) │
-    └─────────────────┘    └─────────────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│  (Using Superpowers) PHASE A: PLAN (Codex CLI / GPT-5.2)                 │
+│  - Create/confirm spec                                                   │
+│  - Write canonical implementation plan: docs/plans/<date>-<topic>.md     │
+└───────────────────────────────────────────────────┬──────────────────────┘
+                                                    │
+                                                    ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│              PHASE B: IMPLEMENT (Claude Code + this plugin)              │
+└───────────────────────────────────────────────────┬──────────────────────┘
+                                                    │
+                                                    ▼
+         ┌────────────────────────────────────────────────────────┐
+         │ STEP 1: Create planning files in repo root             │
+         │  - task_plan.md                                        │
+         │  - findings.md                                         │
+         │  - progress.md                                         │
+         └───────────────────────────────┬────────────────────────┘
+                                         │
+                                         ▼
+         ┌────────────────────────────────────────────────────────┐
+         │ STEP 2: Link canonical plan + enable checkpoints       │
+         │  - Canonical plan: docs/plans/<...>.md                 │
+         │  - Stop policy: checkpoints-allowed                    │
+         │  - Next 1–3 Actions filled                             │
+         └───────────────────────────────┬────────────────────────┘
+                                         │
+                                         ▼
+    ┌────────────────────────────────────────────────────────────────────┐
+    │ WORK LOOP (Checkpointed batches, default: first 3 tasks)           │
+    │                                                                    │
+    │  PreToolUse Hook (Automatic)                                       │
+    │   → Reads task_plan.md before Write/Edit/Bash                      │
+    │                                                                    │
+    │  Execute batch (Tasks 1–3)                                         │
+    │   - Follow canonical plan steps + verifications                    │
+    │   - Update findings.md (2-Action Rule)                             │
+    │   - Update progress.md (tests/output, files changed, errors)       │
+    │   - Update task_plan.md (phase + next 1–3 actions + deviations)    │
+    │                                                                    │
+    │  Write “Batch Report” in progress.md + say: “Ready for feedback.”  │
+    └───────────────────────────────────────────────┬────────────────────┘
+                                                    │
+                                                    ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                    PHASE C: REVIEW (Codex CLI / GPT-5.2)                 │
+│  - Review Batch Report + verification output in progress.md              │
+│  - Request changes or approve next batch                                 │
+└───────────────────────────────────────────────────┬──────────────────────┘
+                                                    │
+                                                    ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ LOOP: Implement next batch (Tasks 4–6, ...) → Batch Report → Review      │
+└──────────────────────────────────────────────────────────────────────────┘
+
+Stop Hook behavior:
+- Default (strict): blocks stopping until all phases are complete
+- If Stop policy: checkpoints-allowed → allows pausing between batches
 ```
 
 **Key Interactions:**
-- **PreToolUse Hook**: Automatically reads `task_plan.md` before Write/Edit/Bash operations (attention manipulation)
-- **Stop Hook**: Automatically verifies all phases are complete before stopping
-- **2-Action Rule**: After every 2 view/browser/search operations, update `findings.md`
-- **Phase Completion**: Update both `task_plan.md` (status) and `progress.md` (details)
-- **Error Handling**: Log errors in both `task_plan.md` and `progress.md`
+- **Canonical plan** stays stable in `docs/plans/...`; execution state lives in `task_plan.md`
+- **PreToolUse Hook** refreshes goals by showing `task_plan.md` frequently
+- **Stop policy: checkpoints-allowed** enables checkpoint pauses without “task complete” enforcement
+- **Batch Reports** in `progress.md` provide evidence for Codex/GPT-5.2 review
 
 </details>
 

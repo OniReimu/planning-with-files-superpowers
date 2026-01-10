@@ -14,6 +14,15 @@ fi
 echo "=== Task Completion Check ==="
 echo ""
 
+# Allow checkpoint stopping when explicitly enabled in task_plan.md
+if grep -qF "Stop policy: checkpoints-allowed" "$PLAN_FILE"; then
+    echo "CHECKPOINT STOP ALLOWED"
+    echo ""
+    echo "Stop policy is set to: checkpoints-allowed"
+    echo "Skipping completion enforcement so you can pause between review checkpoints."
+    exit 0
+fi
+
 # Count phases by status (using -F for fixed string matching)
 TOTAL=$(grep -c "### Phase" "$PLAN_FILE" || true)
 COMPLETE=$(grep -cF "**Status:** complete" "$PLAN_FILE" || true)

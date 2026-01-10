@@ -42,6 +42,13 @@ If you need to depart from the canonical plan:
 - Minor deviation → log in `task_plan.md` under “Plan Deviations” and continue.
 - Major deviation → STOP and ask to update/replace the canonical `docs/plans/...md`.
 
+### Checkpoint execution + pausing
+
+If you’re executing the canonical plan in reviewable batches (default: first **3 tasks**), you can pause safely between batches:
+
+- In `task_plan.md`, set: `Stop policy: checkpoints-allowed`
+- After each batch, write a “Batch Report” in `progress.md`, say “Ready for feedback.”, and wait.
+
 ## Example 1: Research Task
 
 **User Request:** "Research the benefits of morning exercise and write a summary"

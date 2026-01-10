@@ -18,6 +18,8 @@ At the top of `task_plan.md`, set:
 
 - `Canonical plan: docs/plans/<the file>.md`
 - Next 1–3 actions (so resuming is easy after context switches)
+- If executing in batches and you want to pause between checkpoints:
+  - Set `Stop policy: checkpoints-allowed`
 
 ### 3) Track deviations explicitly
 
