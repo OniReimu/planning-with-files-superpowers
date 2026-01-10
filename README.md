@@ -234,7 +234,7 @@ git clone https://github.com/OniReimu/planning-with-files-superpowers.git
 cp -r planning-with-files-superpowers/.cursor .cursor
 ```
 
-Or manually create `.cursor/rules/planning-with-files.mdc` in your project with the content from this repo.
+Or manually create `.cursor/rules/planning-with-files-superpowers.mdc` in your project with the content from this repo.
 
 > **Note:** Hooks (PreToolUse, Stop) are Claude Code specific and won't work in Cursor. The core planning workflow still applies.
 
@@ -511,7 +511,7 @@ planning-with-files-superpowers/
 │   └── marketplace.json     # Marketplace listing
 ├── .cursor/
 │   └── rules/
-│       └── planning-with-files.mdc  # Cursor rules file
+│       └── planning-with-files-superpowers.mdc  # Cursor rules file
 ├── skills/
 │   └── planning-with-files-superpowers/
 │       ├── SKILL.md         # Main skill definition
