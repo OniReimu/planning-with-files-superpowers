@@ -505,7 +505,7 @@ Include:
 ## File Structure
 
 ```
-planning-with-files/
+planning-with-files-superpowers/
 ├── .claude-plugin/
 │   ├── plugin.json          # Plugin manifest
 │   └── marketplace.json     # Marketplace listing
@@ -513,7 +513,7 @@ planning-with-files/
 │   └── rules/
 │       └── planning-with-files.mdc  # Cursor rules file
 ├── skills/
-│   └── planning-with-files/
+│   └── planning-with-files-superpowers/
 │       ├── SKILL.md         # Main skill definition
 │       ├── reference.md     # Manus principles
 │       ├── examples.md      # Usage examples
